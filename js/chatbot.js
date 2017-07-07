@@ -1,4 +1,4 @@
-var ChatBot = function () {
+var ChatBot = function() {
 
     //// common vars
     // custom patterns and rewrites
@@ -61,8 +61,8 @@ var ChatBot = function () {
             if (matches != null) {
                 //console.log(matches);
                 for (j = 0; j < matches.length; j++) {
-                    var cleanMatch = matches[j].replace(/<\/?span[^>]*>/gi,'');
-                    examplePhrases.push(cleanMatch.replace(/['"]/gi,''));
+                    var cleanMatch = matches[j].replace(/<\/?span[^>]*>/gi, '');
+                    examplePhrases.push(cleanMatch.replace(/['"]/gi, ''));
                 }
             }
             description += '<div class="commandDescription">' + pdesc + '</div>';
@@ -77,7 +77,7 @@ var ChatBot = function () {
         }
 
         for (i = 0; i < examplePhrases.length; i++) {
-            datalist.append($('<option value="'+examplePhrases[i]+'"></option>'));
+            datalist.append($('<option value="' + examplePhrases[i] + '"></option>'));
         }
 
         //console.log(examplePhrases);
@@ -93,7 +93,7 @@ var ChatBot = function () {
             if ($(inputs).val() != '|') {
                 newValue += $(inputs).val();
             }
-            newValue += state.currentInput.slice(state.start,state.start+1);
+            newValue += state.currentInput.slice(state.start, state.start + 1);
             $(inputs).val(newValue);
             state.start++;
 
@@ -127,46 +127,204 @@ var ChatBot = function () {
                 var chclb = $('#chatBotConversationLoadingBar');
                 if (chclb.size() == 0) {
                     chclb = $('<div id="chatBotConversationLoadingBar"></div>');
-                    chclb.css('position','absolute');
+                    chclb.css('position', 'absolute');
                     $('body').append(chclb);
                 }
 
-                var left =  $(inputs).offset().left;
+                var left = $(inputs).offset().left;
                 var top = $(inputs).offset().top + $(inputs).outerHeight() - 3;
-                chclb.css('left',left+'px');
-                chclb.css('top',top+'px');
+                chclb.css('left', left + 'px');
+                chclb.css('top', top + 'px');
 
                 chclb.animate({
-                    width: $(inputs).outerWidth()+'px',
+                    width: $(inputs).outerWidth() + 'px',
                 }, pauseLength, function() {
-                    chclb.css('width','0');
+                    chclb.css('width', '0');
                 });
 
             }
-        }, Math.random()*120+10);
+        }, Math.random() * 120 + 10);
     }
 
     return {
         Engines: {
-            
-            duckduckgo: function () {
+
+            timeEngine: function() {
+
+                return {
+                    name: function() {
+                        return "timeEngine";
+                    },
+                    react: function(query) {
+                        if (query.indexOf('time') >= 0 || query.indexOf('date') >= 0) {
+                            return '<b>' + new Date().toLocaleString(); + '</b>';
+                        }
+                        return false;
+                    },
+                    getCapabilities: function() {
+                        return [
+                            "Ask me about the time like 'what time is it?'",
+                            "Ask me about the date like 'what's today date?'"
+                        ];
+                    },
+                    getSuggestUrl: function() {
+                        return null;
+                    }
+                }
+            },
+
+            jokeEngine: function() {
+
+                return {
+                    name: function() {
+                        return "jokeEngine";
+                    },
+                    react: function(query) {
+                        if (query.indexOf('joke') >= 0) {
+                          var content = "I'd love to, but...";
+                          jokeResponses = [
+                            "I have to floss my cat.",
+                            "I've dedicated my life to linguine.",
+                            "I want to spend more time with my blender.",
+                            "The President said he might drop in.",
+                            "The man on television told me to say tuned.",
+                            "I've been scheduled for a karma transplant.",
+                            "I'm staying home to work on my cottage cheese sculpture.",
+                            "It's my parakeet's bowling night.",
+                            "It wouldn't be fair to the other Beautiful People.",
+                            "I'm building a pig from a kit.",
+                            "I did my own thing and now I've got to undo it.",
+                            "I'm enrolled in aerobic scream therapy.",
+                            "There's a disturbance in the Force.",
+                            "I'm doing door-to-door collecting for static cling.",
+                            "I have to go to the post office to see if I'm still wanted.",
+                            "I'm teaching my ferret to yodel.",
+                            "I have to check the freshness dates on my dairy products.",
+                            "I'm going through cherry cheesecake withdrawal.",
+                            "I'm planning to go downtown to try on gloves.",
+                            "My crayons all melted together.",
+                            "I'm trying to see how long I can go without saying yes.",
+                            "I'm in training to be a household pest.",
+                            "I'm getting my overalls overhauled.",
+                            "My patent is pending.",
+                            "I'm attending the opening of my garage door.",
+                            "I'm sandblasting my oven.",
+                            "I'm worried about my vertical hold.",
+                            "I'm going down to the bakery to watch the buns rise.",
+                            "I'm being deported.",
+                            "The grunion are running.",
+                            "I'll be looking for a parking space.",
+                            "My Millard Fillmore Fan Club meets then.",
+                            "The monsters haven't turned blue yet, and I have to eat more dots.",
+                            "I'm taking punk totem pole carving.",
+                            "I have to fluff my shower cap.",
+                            "I'm converting my calendar watch from Julian to Gregorian.",
+                            "I've come down with a really horrible case of something or other.",
+                            "I made an appointment with a cuticle specialist.",
+                            "My plot to take over the world is thickening.",
+                            "I have to fulfill my potential.",
+                            "I don't want to leave my comfort zone.",
+                            "It's too close to the turn of the century.",
+                            "I have some real hard words to look up in the dictionary.",
+                            "My subconscious says no.",
+                            "I'm giving nuisance lessons at a convenience store.",
+                            "I left my body in my other clothes.",
+                            "The last time I went, I never came back.",
+                            "I've got a Friends of Rutabaga meeting.",
+                            "None of my socks match.",
+                            "I have to be on the next train to Bermuda.",
+                            "I'm having all my plants neutered.",
+                            "People are blaming me for the Spanish-American War.",
+                            "I changed the lock on my door and now I can't get out.",
+                            "Refrigerator.",
+                            "I'm attending a perfume convention as guest sniffer.",
+                            "My yucca plant is feeling yucky.",
+                            "I'm touring China with a wok band.",
+                            "My chocolate-appreciation class meets that night.",
+                            'I never go out on days that end in "Y"',
+                            "My mother would never let me hear the end of it.",
+                            "I'm running off to Yugoslavia with a foreign-exchange student named",
+                            "Basil Metabolism.",
+                            "it down.",
+                            "I'm too old/young for that stuff.",
+                            "I have to wash/condition/perm/curl/tease/torment my hair.",
+                            "I have too much guilt.",
+                            "There are important world issues that need worrying about.",
+                            "I'm uncomfortable when I'm alone or with others.",
+                            "I promised to help a friend fold road maps.",
+                            "I feel a song coming on.",
+                            "I'm trying to be less popular.",
+                            "My bathroom tiles need grouting.",
+                            "I have to bleach my hare.",
+                            "I'm waiting to see if I'm already a winner.",
+                            "I'm writing a love letter to Richard Simmons.",
+                            "You know how we psychos are.",
+                            "My favorite commercial is on TV.",
+                            "I have to study for a blood test.",
+                            "I'm going to be old someday.",
+                            "I've been traded to Cincinnati.",
+                            "I'm observing National Apathy Week.",
+                            "I have to rotate my crops.",
+                            "My uncle escaped again.",
+                            "I'm up to my elbows in waxy buildup.",
+                            "I have to knit some dust bunnies for a charity bazaar.",
+                            "I'm having my baby shoes bronzed.",
+                            "I have to go to court for kitty littering.",
+                            "I'm going to count the bristles in my toothbrush.",
+                            "I have to thaw some karate chops for dinner.",
+                            "Having fun gives me prickly heat.",
+                            "I'm going to the Missing Persons Bureau to see if anyone is looking",
+                            "for me.",
+                            "I have to jog my memory.",
+                            "My palm reader advised against it.",
+                            "My Dress For Obscurity class meets then.",
+                            "I have to stay home and see if I snore.",
+                            "I prefer to remain an enigma.",
+                            "I think you want the OTHER  [your name].",
+                            "I have to sit up with a sick ant.",
+                            "I'm trying to cut down."
+                          ];
+                          var rand = jokeResponses[Math.floor(Math.random() * jokeResponses.length)];
+                          content += "<p>&nbsp;&nbsp;&nbsp;" + rand + "</p>";
+                          return content;
+                        }
+                        return false;
+                    },
+                    getCapabilities: function() {
+                        return [
+                            "Tell me a joke!"
+                        ];
+                    },
+                    getSuggestUrl: function() {
+                        return null;
+                    }
+                }
+            },
+
+            ddgEngine: function() {
 
                 // patterns that the engine can resolve
                 var capabilities = [
                     "Ask what something is like 'What is DNA'?",
                     "Ask where something is like 'Where is China'?",
-                    "Ask about a person like 'Who is Bill Gates'?",
-                    "Say a movie/person/location name like 'Braveheart' to get information about that entity",
-                    "Say a something like 'simpsons characters' to get information about that phrase",
+                    "Ask about a person like 'Who is Larry Ellison'?",
+                    "Say a movie/person/location name like 'Titanic' to get information about that entity",
+                    "Say something like 'simpsons characters' to get information about that phrase",
                 ];
 
                 return {
-                    react: function (query) {
+                    name: function() {
+                        return "ddgEngine";
+                    },
+                    react: function(query) {
+                        console.log("asking ddg instant answers...");
                         $.ajax({
                             type: 'GET',
                             url: 'http://api.duckduckgo.com/?format=json&pretty=1&q=' + encodeURIComponent(query),
                             dataType: 'jsonp'
-                        }).done(function (data) {
+                        }).done(function(data) {
+
+                            console.log("ddg has an answer... " + data.AbstractText);
 
                             var content = data.AbstractText;
 
@@ -176,37 +334,37 @@ var ChatBot = function () {
 
                                 var media = [];
                                 if (ob.Result !== undefined) {
-                                  if (ob.Icon.URL != '' && ob.Icon.URL.indexOf(".ico") < 0) {
-                                      media.push(ob.Icon.URL);
-                                  }
+                                    if (ob.Icon.URL != '' && ob.Icon.URL.indexOf(".ico") < 0) {
+                                        media.push(ob.Icon.URL);
+                                    }
 
-                                  content += '<p>' + ob.Result.replace("</a>", "</a> ") + '</p>';
+                                    content += '<p>' + ob.Result.replace("</a>", "</a> ") + '</p>';
 
-                                  if(media.length > 0) {
-                                    var m = media[0];
-                                    content += '<img src="' + media[0] + '" style="margin-right:5px"/>';
-                                  }
-                              }
+                                    if (media.length > 0) {
+                                        var m = media[0];
+                                        content += '<img src="' + media[0] + '" style="margin-right:5px"/>';
+                                    }
+
+                                }
+                                ChatBot.addChatEntry(content, 'bot');
                             } else {
-
                                 if (data.Image != undefined && data.Image != '') {
 
                                     content += '<br>';
-
                                     content += '<div class="imgBox">' +
                                         '<img src="' + data.Image + '" />' +
                                         '<div class="title">' + data.Heading + '</div>' +
                                         '</div>';
+                                    ChatBot.addChatEntry(content, 'bot');
 
                                 }
-
                             }
 
-                            ChatBot.addChatEntry(content, "bot");
-                            ChatBot.thinking(false);
+                            return false;
+
                         });
                     },
-                    getCapabilities: function () {
+                    getCapabilities: function() {
                         return capabilities;
                     },
                     getSuggestUrl: function() {
@@ -216,7 +374,7 @@ var ChatBot = function () {
             }
         },
 
-        init: function (options) {
+        init: function(options) {
             var settings = jQuery.extend({
                 // these are the defaults.
                 botName: 'Bot',
@@ -249,19 +407,18 @@ var ChatBot = function () {
             }
 
             // listen to inputs on the defined fields
-            $(inputs).keyup(function (e) {
+            $(inputs).keyup(function(e) {
                 if (e.keyCode == 13) {
                     ChatBot.addChatEntry($(this).val(), "human");
                     ChatBot.react($(this).val());
                 }
-                //console.log($(this).val());
             });
 
         },
-        setBotName: function (name) {
+        setBotName: function(name) {
             botName = name;
         },
-        setHumanName: function (name) {
+        setHumanName: function(name) {
             humanName = name;
             $('.chatBotChatEntry.human .origin').html(name);
         },
@@ -279,7 +436,7 @@ var ChatBot = function () {
                 addChatEntryCallback.call(this, entryDiv, text, origin);
             }
         },
-        thinking: function (on) {
+        thinking: function(on) {
             var ti = $('#chatBotThinkingIndicator');
             if (on) {
                 if (!sampleConversationRunning) {
@@ -317,7 +474,6 @@ var ChatBot = function () {
                             }
                             break;
                         case 'response':
-//                                var response = text.replace(r, pattern.actionValue);
                             var response = pattern.actionValue;
                             if (response != undefined) {
                                 for (var j = 1; j < matches.length; j++) {
@@ -337,11 +493,18 @@ var ChatBot = function () {
 
             for (var e = 0; e < engines.length; e++) {
                 var engine = engines[e];
-                engine.react(text);
+                var reaction = engine.react(text);
+                console.log('trying ' + engine.name + " ************ " + reaction);
+                if (reaction != null && reaction != false && reaction != undefined) {
+                    ChatBot.addChatEntry(reaction, 'bot');
+                    break; // exit after first response
+                }
+
             }
+            ChatBot.thinking(false);
 
         },
-        playConversation: function (conversation, pauseLength) {
+        playConversation: function(conversation, pauseLength) {
 
             if (pauseLength == undefined) {
                 pauseLength = 3000;
@@ -366,11 +529,11 @@ var ChatBot = function () {
 
             return true;
         },
-        addPatternObject: function (obj) {
+        addPatternObject: function(obj) {
             patterns.push(obj);
             updateCommandDescription();
         },
-        addPattern: function (regexp, actionKey, actionValue, callback, description) {
+        addPattern: function(regexp, actionKey, actionValue, callback, description) {
             var obj = {
                 regexp: regexp,
                 actionKey: actionKey,

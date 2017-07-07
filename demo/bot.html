@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  <title>Botty McBotface</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <title>ORAC</title>
   <style>
     body {
       color: #333;
@@ -57,14 +57,19 @@
       display: none;
     }
   </style>
+
+  <script src="../js/chatbot.js"></script>
+
 </head>
 
 <body>
+  <div id='container'></div>
 
-  <script src="../js/chatbot.js"></script>
+
   <link rel="stylesheet" type="text/css" href="../css/chatbot.css" />
 
   <div id="demo">
+
     <div id="chatBotCommandDescription"></div>
     <input id="humanInput" type="text" placeholder="Say something" />
 
@@ -85,32 +90,42 @@
   <script>
     var sampleConversation = [
       "Hi",
-      "My name is Fry",
+      "My name is HCE",
       "Where is China?",
       "What is the population of China?",
       "Bye"
     ];
+
+    // More fun than a frog in a glass of milk?
     var config = {
-      botName: 'BottyMcBotface',
+      botName: '<a href="http://blakes7.wikia.com/wiki/Orac_(Computer)" title="Orac was a sophisticated artificial intelligence, referred to by its creator Ensor as a brain rather than a computer. ">ORAC</a>',
       inputs: '#humanInput',
       inputCapabilityListing: true,
-      engines: [ChatBot.Engines.duckduckgo()],
+      engines: [
+        ChatBot.Engines.timeEngine(),
+        ChatBot.Engines.jokeEngine(),
+        ChatBot.Engines.ddgEngine()
+      ],
       addChatEntryCallback: function(entryDiv, text, origin) {
         entryDiv.delay(200).slideDown();
       }
     };
     ChatBot.init(config);
-    ChatBot.setBotName("Botty McBotface");
-    ChatBot.addPattern("^hi|hello$", "response", "Howdy, friend", undefined, "Say 'Hi' to be greeted back.");
+    ChatBot.addPattern("^hi|hello$", "response", "Hi, there", undefined, "Say 'Hi' to be greeted back.");
     ChatBot.addPattern("^bye|fuck off$", "response", "See you later buddy", undefined, "Say 'Bye' to end the conversation.");
+    ChatBot.addPattern("ALP", "response", "Humphrey Chimpden Earwicker, at your service...", undefined, "Ask about Finnegans Wake");
+    ChatBot.addPattern("HCE", "response", "Anna Livia Plurabelle, at your service...", undefined, "Ask about Finnegans Wake");
     ChatBot.addPattern("(?:my name is|I'm|I am) (.*)", "response", "hi $1, thanks for talking to me today", function(matches) {
       ChatBot.setHumanName(matches[1]);
     }, "Say 'My name is [your name]' or 'I am [name]' to be called that by the bot");
     ChatBot.addPattern("(what is the )?meaning of life", "response", "42", undefined, "Say 'What is the meaning of life' to get the answer.");
     ChatBot.addPattern("calculate ([0-9]+) plus ([0-9]+)", "response", undefined, function(matches) {
-    ChatBot.addChatEntry("That would be " + (1 * matches[1] + 1 * matches[2]) + ".", "bot");
-  }, "Say 'calculate [number] plus [number]' to make the bot your math monkey");
+      ChatBot.addChatEntry("That would be " + (1 * matches[1] + 1 * matches[2]) + ".", "bot");
+    }, "Say 'calculate [number] plus [number]' to make the bot your math monkey");
+
+
   </script>
+
 </body>
 
 </html>
