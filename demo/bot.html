@@ -58,6 +58,7 @@
     }
   </style>
 
+  <script src="../js/elizabot.js"></script>
   <script src="../js/chatbot.js"></script>
 
 </head>
@@ -104,6 +105,7 @@
       engines: [
         ChatBot.Engines.timeEngine(),
         ChatBot.Engines.jokeEngine(),
+        ChatBot.Engines.elizaEngine(),
         ChatBot.Engines.ddgEngine()
       ],
       addChatEntryCallback: function(entryDiv, text, origin) {

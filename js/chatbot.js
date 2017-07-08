@@ -149,6 +149,35 @@ var ChatBot = function() {
     return {
         Engines: {
 
+            //
+            elizaEngine: function() {
+                // Load Eliza engine
+                var eliza = new ElizaBot;
+                eliza.memSize = 1024;
+
+                return {
+                    name: function() {
+                        return "elizaEngine";
+                    },
+                    react: function(query) {
+                        var content = eliza.transform(query);
+                        if(content) {
+                          return "Eliza says..." + content;
+                        }
+                        return false;
+                    },
+                    getCapabilities: function() {
+                        return [
+                            "Ask me about the time like 'what time is it?'",
+                            "Ask me about the date like 'what's today date?'"
+                        ];
+                    },
+                    getSuggestUrl: function() {
+                        return null;
+                    }
+                }
+            },
+
             timeEngine: function() {
 
                 return {
@@ -494,7 +523,7 @@ var ChatBot = function() {
             for (var e = 0; e < engines.length; e++) {
                 var engine = engines[e];
                 var reaction = engine.react(text);
-                console.log('trying ' + engine.name + " ************ " + reaction);
+                console.log('trying ' + engine.name() + " ************ " + reaction);
                 if (reaction != null && reaction != false && reaction != undefined) {
                     ChatBot.addChatEntry(reaction, 'bot');
                     break; // exit after first response
