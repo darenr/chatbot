@@ -1,5 +1,4 @@
 function elizaEngine() {
-  // Load Eliza engine
   var eliza = new ElizaBot;
   eliza.memSize = 1024;
 
@@ -8,11 +7,15 @@ function elizaEngine() {
       return "elizaEngine";
     },
     react: function(query) {
-      var content = eliza.transform(query);
-      if (content) {
-        return "Eliza says..." + content;
+      if (query.match(/eliza\s+[a-z]*/i)) {
+        var question = query.substring('eliza'.length)
+          .trim();
+        console.log('asking eliza: ' + question);
+        var content = eliza.transform(question);
+        if (content) {
+          ChatBot.addChatEntry("Eliza says..." + content, 'bot');
+        }
       }
-      return false;
     },
     getCapabilities: function() {
       return [

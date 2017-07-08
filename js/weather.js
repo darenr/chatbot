@@ -10,11 +10,9 @@ function weatherEngine() {
         var zipcode = query.match(zipcodePattern)[2];
         console.log("found weather intent with zip code of " + zipcode);
         // do zipcode lookup
-        ChatBot.thinking(true);
         var content = "found weather intent with zip code of " + zipcode;
-        return content;
+        ChatBot.addChatEntry(content, 'bot');
       } else if (query.match(/.*(weather here|my weather).*$/i)) {
-        ChatBot.thinking(true);
         // use html5 lat/lon
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
@@ -37,10 +35,7 @@ function weatherEngine() {
         } else {
           ChatBot.addChatEntry("Sorry, browser does not support geolocation!", 'bot');
         }
-        return "";
       }
-
-      return false;
     },
     getCapabilities: function() {
       return [

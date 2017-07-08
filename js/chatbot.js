@@ -296,20 +296,12 @@ var ChatBot = function() {
         }
       }
 
-      ChatBot.thinking(true);
       for (var e = 0; e < engines.length; e++) {
         var engine = engines[e];
-        console.log('trying ' + engine.name());
-        var reaction = engine.react(text);
-        if (typeof reaction === 'string') {
-          if (reaction.length > 0) {
-            ChatBot.addChatEntry(reaction, 'bot');
-          }
-          console.log('stopping bot engines after ' + engine.name() + " response already found");
-          break; // exit after first response
-        }
+        console.log('calling ' + engine.name() + "...");
+        engine.react(text);
       }
-      ChatBot.thinking(false);
+      this.thinking(false);
 
     },
     playConversation: function(conversation, pauseLength) {

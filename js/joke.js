@@ -111,9 +111,8 @@ function jokeEngine() {
         ];
         var rand = jokeResponses[Math.floor(Math.random() * jokeResponses.length)];
         content += "<p>&nbsp;&nbsp;&nbsp;" + rand + "</p>";
-        return content;
+        ChatBot.addChatEntry(content, 'bot');
       }
-      return false;
     },
     getCapabilities: function() {
       return [

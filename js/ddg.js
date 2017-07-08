@@ -4,6 +4,8 @@ function ddgEngine() {
       return "ddgEngine";
     },
     react: function(query) {
+      ChatBot.thinking(true);
+
       $.ajax({
           type: 'GET',
           url: 'http://api.duckduckgo.com/?format=json&pretty=1&q=' + encodeURIComponent(query),
@@ -41,12 +43,8 @@ function ddgEngine() {
                 '<div class="title">' + data.Heading + '</div>' +
                 '</div>';
               ChatBot.addChatEntry(content, 'bot');
-
             }
           }
-
-          return false;
-
         });
     },
     getCapabilities: function() {
