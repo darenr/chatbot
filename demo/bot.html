@@ -109,6 +109,16 @@
 
 
   <script>
+
+    $(document)
+      .ajaxStart(function () {
+        console.log("ajax starting");
+      })
+      .ajaxStop(function () {
+        console.log("ajax stopping");
+      });
+
+
     var sampleConversation = [
       "Hi",
       "My name is HCE",
@@ -119,7 +129,7 @@
 
     // More fun than a frog in a glass of milk?
     var config = {
-      botName: '<a href="http://blakes7.wikia.com/wiki/Orac_(Computer)" title="Orac was a sophisticated artificial intelligence, referred to by its creator Ensor as a brain rather than a computer. ">ORAC</a>',
+      botName: '<img src="/img/robot.png">',
       inputs: '#humanInput',
       inputCapabilityListing: true,
       engines: [
@@ -150,6 +160,9 @@
     $(document).ready(function() {
       $('#humanInput').focus();
     });
+
+
+
   </script>
 
 </body>

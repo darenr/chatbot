@@ -4,7 +4,6 @@ function ddgEngine() {
       return "ddgEngine";
     },
     react: function(query) {
-      ChatBot.thinking(true);
 
       $.ajax({
           type: 'GET',

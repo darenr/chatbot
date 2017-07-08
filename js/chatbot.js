@@ -258,7 +258,6 @@ var ChatBot = function() {
       }
     },
     react: function react(text) {
-      this.thinking(true);
 
       // check for custom patterns
       for (var i = 0; i < patterns.length; i++) {
@@ -286,7 +285,6 @@ var ChatBot = function() {
                 }
                 this.addChatEntry(response, "bot");
               }
-              ChatBot.thinking(false);
               if (pattern.callback != undefined) {
                 pattern.callback.call(this, matches);
               }
@@ -301,7 +299,7 @@ var ChatBot = function() {
         console.log('calling ' + engine.name() + "...");
         engine.react(text);
       }
-      this.thinking(false);
+      ChatBot.thinking(false);
 
     },
     playConversation: function(conversation, pauseLength) {

@@ -23,6 +23,12 @@ body {
   color: white;
 }
 
+.origin img {
+    width: 32px;
+    height: 32px;
+    margin: 10px;
+}
+
 .chatBotChatEntry {
   padding: 20px;
   background-color: #fff;
@@ -88,7 +94,7 @@ body {
 }
 
 .bot {
-  background-color: #8e24aa;
+  background-color: #157f4f;
   color: white;
 }
 
