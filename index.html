@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <title>ORAC</title>
+  <style>
+    body {
+      color: #333;
+      background-color: #efefef;
+      font: 13px helvetica, arial, freesans, clean, sans-serif;
+    }
+
+    #demo {
+      /*background-color: #ffffff;*/
+      width: 80%;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+
+      background-color: #F8F8F8;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px #999;
+      line-height: 1.4em;
+      font: 13px helvetica, arial, freesans, clean, sans-serif;
+      color: black;
+    }
+
+    #demo input {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      width: 400px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: darkcyan;
+      color: #fff;
+      padding: 8px;
+      cursor: pointer;
+      float: right;
+    }
+
+    #chatBotCommandDescription {
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    .chatBotChatEntry {
+      display: none;
+    }
+  </style>
+
+
+  <script src="../js/elizabot.js"></script>
+  <script src="../js/ddg.js"></script>
+  <script src="../js/joke.js"></script>
+  <script src="../js/time.js"></script>
+  <script src="../js/weather.js"></script>
+  <script src="../js/chatbot.js"></script>
+
+</head>
+
+<body>
+  <div id='container'></div>
+
+
+  <link rel="stylesheet" type="text/css" href="../css/chatbot.css" />
+
+  <div id="demo">
+
+    <div id="chatBotCommandDescription"></div>
+    <input id="humanInput" type="text" placeholder="Say something" />
+
+    <!--
+    <div class="button" onclick="if (!ChatBot.playConversation(sampleConversation,4000)) {alert('conversation already running');};">Play sample conversation!</div>
+    -->
+    <div class="button" onclick="$('#chatBotCommandDescription').slideToggle();" style="margin-right:10px">What can I say?</div>
+
+    <div style="clear: both;">&nbsp;</div>
+
+    <div id="chatBot">
+      <div id="chatBotThinkingIndicator"></div>
+      <div id="chatBotHistory"></div>
+    </div>
+  </div>
+
+
+  <script>
+
+    $(document)
+      .ajaxStart(function () {
+        console.log("ajax starting");
+      })
+      .ajaxStop(function () {
+        console.log("ajax stopping");
+      });
+
+
+    var sampleConversation = [
+      "Hi",
+      "My name is HCE",
+      "Where is China?",
+      "What is the population of China?",
+      "Bye"
+    ];
+
+    // More fun than a frog in a glass of milk?
+    var config = {
+      botName: '<img src="/img/robot.png">',
+      inputs: '#humanInput',
+      inputCapabilityListing: true,
+      engines: [
+        ChatBot.Engines.jokeEngine(),
+        ChatBot.Engines.timeEngine(),
+        ChatBot.Engines.weatherEngine(),
+        ChatBot.Engines.ddgEngine(),
+        ChatBot.Engines.elizaEngine()
+      ],
+      addChatEntryCallback: function(entryDiv, text, origin) {
+        entryDiv.delay(200).slideDown();
+      }
+    };
+
+    ChatBot.init(config);
+    ChatBot.addPattern("^hi|hello$", "response", "Hi, there", undefined, "Say 'Hi' to be greeted back.");
+    ChatBot.addPattern("^bye|fuck off$", "response", "See you later buddy", undefined, "Say 'Bye' to end the conversation.");
+    ChatBot.addPattern("ALP", "response", "Humphrey Chimpden Earwicker, at your service...", undefined, "Ask about Finnegans Wake");
+    ChatBot.addPattern("HCE", "response", "Anna Livia Plurabelle, at your service...", undefined, "Ask about more Finnegans Wake");
+    ChatBot.addPattern("(?:my name is|I'm|I am) (.*)", "response", "hi $1, thanks for talking to me today", function(matches) {
+      ChatBot.setHumanName(matches[1]);
+    }, "Say 'My name is [your name]' or 'I am [name]' to be called that by the bot");
+    ChatBot.addPattern("(what is the )?meaning of life", "response", "42", undefined, "Say 'What is the meaning of life' to get the answer.");
+    ChatBot.addPattern("calculate ([0-9]+) plus ([0-9]+)", "response", undefined, function(matches) {
+      ChatBot.addChatEntry("That would be " + (1 * matches[1] + 1 * matches[2]) + ".", "bot");
+    }, "Say 'calculate [number] plus [number]' to make the bot your math monkey");
+
+    $(document).ready(function() {
+      $('#humanInput').focus();
+    });
+
+
+
+  </script>
+
+</body>
+
+</html>
