@@ -168,8 +168,7 @@ var ChatBot = function() {
                     },
                     getCapabilities: function() {
                         return [
-                            "Ask me about the time like 'what time is it?'",
-                            "Ask me about the date like 'what's today date?'"
+                            "Let's talk about our feelings!",
                         ];
                     },
                     getSuggestUrl: function() {
