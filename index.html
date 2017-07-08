@@ -74,12 +74,12 @@
   </style>
 
 
-  <script src="/js/elizabot.js"></script>
-  <script src="/js/ddg.js"></script>
-  <script src="/js/joke.js"></script>
-  <script src="/js/time.js"></script>
-  <script src="/js/weather.js"></script>
-  <script src="/js/chatbot.js"></script>
+  <script src="js/elizabot.js"></script>
+  <script src="js/ddg.js"></script>
+  <script src="js/joke.js"></script>
+  <script src="js/time.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/chatbot.js"></script>
 
 </head>
 
@@ -87,7 +87,7 @@
   <div id='container'></div>
 
 
-  <link rel="stylesheet" type="text/css" href="../css/chatbot.css" />
+  <link rel="stylesheet" type="text/css" href="css/chatbot.css" />
 
   <div id="demo">
 
@@ -109,12 +109,11 @@
 
 
   <script>
-
     $(document)
-      .ajaxStart(function () {
+      .ajaxStart(function() {
         console.log("ajax starting");
       })
-      .ajaxStop(function () {
+      .ajaxStop(function() {
         console.log("ajax stopping");
       });
 
@@ -160,9 +159,6 @@
     $(document).ready(function() {
       $('#humanInput').focus();
     });
-
-
-
   </script>
 
 </body>
